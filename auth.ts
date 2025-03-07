@@ -5,18 +5,22 @@ import { z } from 'zod';
 import type { User } from '@/app/lib/definitions';
 import bcrypt from 'bcrypt';
 import postgres from 'postgres';
+import { api } from './app/lib/api';
  
 
  
 const sql = postgres(process.env.POSTGRES_URL!, { ssl: 'require' });
  
-async function getUser(email: string): Promise<User | undefined> {
+async function getUser(p:any): Promise<User | undefined> {
   try {
-    const user = await sql<User[]>`SELECT * FROM users WHERE email=${email}`;
-    return user[0];
+    const data=await api.post<any>('/auth/sign-in',p)
+
+   
+    console.log('data***',data)
+    return data
   } catch (error) {
-    console.error('Failed to fetch user:', error);
-    throw new Error('Failed to fetch user.');
+    console.error('Failed to fetch user:*****', error);
+    throw new Error('Failed to fetch user.***');
   }
 }
  
@@ -26,16 +30,15 @@ export const { auth, signIn, signOut } = NextAuth({
     Credentials({
       async authorize(credentials) {
        const parsedCredentials = z
-          .object({ email: z.string().email(), password: z.string().min(6) })
+          .object({ phone: z.string() , password: z.string().min(6) })
           .safeParse(credentials);
  
         if (parsedCredentials.success) {
-          const { email, password } = parsedCredentials.data;
-          const user = await getUser(email);
-          if (!user) return null;
-          const passwordsMatch = await bcrypt.compare(password, user.password);
- 
-          if (passwordsMatch) return user;
+          const { phone, password } = parsedCredentials.data;
+          const user = await getUser({phone, password});
+          if(user)
+          return user
+          
         }
  
         console.log('Invalid credentials');
