@@ -1,6 +1,6 @@
 import { cookies } from "next/headers";
 const cookieName = "userSession";
-import { redirect } from "next/navigation";
+
 
 export async function saveSession(accessToken: string) {
 return (await cookies()).set(cookieName, accessToken, {
@@ -10,4 +10,7 @@ return (await cookies()).set(cookieName, accessToken, {
 }
 export async function removeSession( ) {
    return (await cookies()).delete(cookieName)
+}
+export async function isUserLoggedIn( ) {
+   return !!(await cookies()).get(cookieName)?.value
 }
