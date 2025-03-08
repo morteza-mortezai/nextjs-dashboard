@@ -7,7 +7,9 @@ const theme = createTheme({
     fontFamily: 'var(--font-roboto)',
   },
   direction:'rtl',
-  
+  colorSchemes: {
+  dark:true
+  },
 });
 
 export default theme; 
