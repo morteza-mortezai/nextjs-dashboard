@@ -16,6 +16,20 @@ export const authConfig = {
       }
       return true;
     },
+    async jwt({token, account}) {
+      if (account) {
+        token = Object.assign({}, token, { access_token: account.access_token });
+      }
+    return token
+    },
+    async session({session, token}) {
+      if(session) {
+        session = Object.assign({}, session, {access_token: token.access_token})
+        console.log(session);
+        }
+    return session
+    }
+
   },
   providers: [], // Add providers with an empty array for now
 } satisfies NextAuthConfig;

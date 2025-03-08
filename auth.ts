@@ -2,13 +2,13 @@ import NextAuth from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 import { authConfig } from "./auth.config";
 import { z } from "zod";
-import { ILoginResponse } from "./app/login/loginResponse";
-import { loginService } from "./app/login/login.service";
+import { ILoginResponse } from "./app/lib/service/auth/types/loginResponse";
+import { loginService } from "./app/lib/service/auth/login";
 
 async function getUser(p: any): Promise<ILoginResponse | undefined> {
   try {
     const data = await loginService(p);
-
+console.log('d****',data)
     return data;
   } catch (error) {
     console.error("Failed to fetch user:*****", error);
@@ -16,7 +16,7 @@ async function getUser(p: any): Promise<ILoginResponse | undefined> {
   }
 }
 
-export const { auth, signIn, signOut } = NextAuth({
+export const { auth, signIn, signOut, } = NextAuth({
   ...authConfig,
   providers: [
     Credentials({
@@ -28,6 +28,7 @@ export const { auth, signIn, signOut } = NextAuth({
         if (parsedCredentials.success) {
           const { phone, password } = parsedCredentials.data;
           const user = await getUser({ phone, password });
+          console.log('uuu',user)
           if (user) return user;
         }
 
