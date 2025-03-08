@@ -1,31 +1,32 @@
-'use client';
- 
-import { lusitana } from '@/app/ui/fonts';
+"use client";
+
+import { lusitana } from "@/app/ui/fonts";
 import {
   AtSymbolIcon,
   KeyIcon,
   ExclamationCircleIcon,
-} from '@heroicons/react/24/outline';
-import { ArrowRightIcon } from '@heroicons/react/20/solid';
-import { Button } from '@/app/ui/button';
-import { useActionState } from 'react';
-import { authenticate } from '@/app/lib/actions';
-import { useSearchParams } from 'next/navigation';
- 
+} from "@heroicons/react/24/outline";
+import { ArrowRightIcon } from "@heroicons/react/20/solid";
+import { Button } from "@/app/ui/button";
+import { useActionState } from "react";
+import { authenticate } from "@/app/lib/auth.action";
+import { useSearchParams } from "next/navigation";
+
 export default function LoginForm() {
   const searchParams = useSearchParams();
-  const callbackUrl = searchParams.get('callbackUrl') || '/dashboard';
+  const callbackUrl = searchParams.get("callbackUrl") || "/dashboard";
   const [errorMessage, formAction, isPending] = useActionState(
     authenticate,
-    undefined,
+    undefined
   );
- 
+
   return (
     <form action={formAction} className="space-y-3">
       <div className="flex-1 rounded-lg bg-gray-50 px-6 pb-4 pt-8">
         <h1 className={`${lusitana.className} mb-3 text-2xl`}>
           Please log in to continue.
         </h1>
+        {JSON.stringify(errorMessage?.errors)}
         <div className="w-full">
           <div>
             <label
@@ -38,7 +39,7 @@ export default function LoginForm() {
               <input
                 className="peer block w-full rounded-md border border-gray-200 py-[9px] pl-10 text-sm outline-2 placeholder:text-gray-500"
                 id="phone"
-                defaultValue={'+989362532122'}
+                defaultValue={"+989362532122"}
                 name="phone"
                 placeholder="Enter your email address"
                 required
@@ -59,7 +60,7 @@ export default function LoginForm() {
                 id="password"
                 type="password"
                 name="password"
-                defaultValue={'3132028MRtz'}
+                defaultValue={"3132028MRtz"}
                 placeholder="Enter password"
                 required
                 minLength={6}
@@ -77,12 +78,12 @@ export default function LoginForm() {
           aria-live="polite"
           aria-atomic="true"
         >
-          {errorMessage && (
+          {/* {errorMessage && (
             <>
               <ExclamationCircleIcon className="h-5 w-5 text-red-500" />
               <p className="text-sm text-red-500">{errorMessage}</p>
             </>
-          )}
+          )} */}
         </div>
       </div>
     </form>
