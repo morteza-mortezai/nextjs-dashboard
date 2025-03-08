@@ -1,8 +1,10 @@
 'use client'
 
+import { useSession } from "@/app/lib/sessionProvider"
 
 export default function mediaList(){
-   
-
-    return (<div>list</div>)
+    const s=useSession()
+    return (<div>list
+        <div>{s}</div>
+    </div>)
 }
