@@ -1,3 +1,5 @@
+import { getSession } from "../authSession";
+
 const BASE_URL = process.env.API_BASE_URL || "https://api.example.com";
 
 // Helper function to build URL with query parameters
@@ -26,12 +28,15 @@ export const api = {
     path: string,
     { body, query, headers, cache }: RequestOptions = {}
   ): Promise<T> {
+    const token = await getSession();
+
     const url = buildUrl(path, query);
 
     const options: RequestInit = {
       method,
       headers: {
         "Content-Type": "application/json",
+        authorization: `Bearer ${token}`,
         ...headers,
       },
       cache: cache ?? "no-store", // Dynamic caching: override with custom value if provided
@@ -44,7 +49,9 @@ export const api = {
 
     if (!res.ok) {
       const errorText = await res.text();
-      throw new Error(`API Error: ${res.status} ${res.statusText} - ${errorText}`);
+      throw new Error(
+        `API Error: ${res.status} ${res.statusText} - ${errorText}`
+      );
     }
 
     return res.json();
@@ -56,6 +63,7 @@ export const api = {
     headers?: HeadersInit,
     cache?: RequestInit["cache"]
   ): Promise<T> {
+    console.log("qqq", query);
     return this.request<T>("GET", path, { query, headers, cache });
   },
 

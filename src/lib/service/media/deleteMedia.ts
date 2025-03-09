@@ -1,4 +1,4 @@
-import { api } from '@/src/app/lib/service/api';
+import { api } from '@/src/lib/service/api';
 import { Media } from './type/Media';
 
   export const deleteMedia = async (id: number) => {

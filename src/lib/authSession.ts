@@ -1,5 +1,4 @@
 import { cookies } from "next/headers";
-import { ILoginResponse } from "./service/auth/types/loginResponse";
 const cookieName = "userSession";
 
 export async function saveSession(accessToken: string) {
