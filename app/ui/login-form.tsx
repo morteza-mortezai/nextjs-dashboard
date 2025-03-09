@@ -15,10 +15,11 @@ import { useSearchParams } from "next/navigation";
 export default function LoginForm() {
   const searchParams = useSearchParams();
   const callbackUrl = searchParams.get("callbackUrl") || "/dashboard";
+  
   const [errorMessage, formAction, isPending] = useActionState(
     authenticate,
     undefined
-  );
+  ); 
 
   return (
     <form action={formAction} className="space-y-3">
@@ -26,7 +27,7 @@ export default function LoginForm() {
         <h1 className={`${lusitana.className} mb-3 text-2xl`}>
           Please log in to continue.
         </h1>
-        {JSON.stringify(errorMessage?.errors)}
+        {JSON.stringify(errorMessage?.message)}
         <div className="w-full">
           <div>
             <label
