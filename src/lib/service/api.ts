@@ -63,7 +63,6 @@ export const api = {
     headers?: HeadersInit,
     cache?: RequestInit["cache"]
   ): Promise<T> {
-    console.log("qqq", query);
     return this.request<T>("GET", path, { query, headers, cache });
   },
 
@@ -89,10 +88,9 @@ export const api = {
 
   delete<T>(
     path: string,
-    query?: Record<string, any>,
     headers?: HeadersInit,
     cache?: RequestInit["cache"]
   ): Promise<T> {
-    return this.request<T>("DELETE", path, { query, headers, cache });
+    return this.request<T>("DELETE", path, { query:undefined, headers, cache });
   },
 };

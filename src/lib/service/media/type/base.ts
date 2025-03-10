@@ -12,6 +12,7 @@ export type BaseMedia = {
   exchangeDesc:string
   adsDesc:string
   engagementRate:number|null
+  publishedAt:string|null
 };
 export type Base = {
   id: number;
