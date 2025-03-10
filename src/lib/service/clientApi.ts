@@ -1,9 +1,10 @@
-import { getSession } from "../authSession";
-
 const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || "https://api.example.com";
 
+// in client we request to /api/resource-path and it will be proxied to http://localhost:4000/api/resource-path
+// but in server side we directlt request to http://localhost:4000/api/resource-path
 // Helper function to build URL with query parameters
 function buildUrl(path: string, query?: Record<string, any>): string {
+  // const url = new URL(`${BASE_URL}${path}`);
   const url = new URL(`${BASE_URL}${path}`);
   if (query) {
     Object.entries(query).forEach(([key, value]) => {
@@ -12,7 +13,7 @@ function buildUrl(path: string, query?: Record<string, any>): string {
       }
     });
   }
-  return url.toString();
+  return  url.pathname ;
 }
 
 type RequestOptions = {
@@ -22,13 +23,13 @@ type RequestOptions = {
   cache?: RequestInit["cache"];
 };
 
-export const api = {
+export const clientApi = {
   async request<T>(
     method: string,
     path: string,
     { body, query, headers, cache }: RequestOptions = {}
   ): Promise<T> {
-    const token = await getSession();
+
 
     const url = buildUrl(path, query);
 
@@ -36,9 +37,10 @@ export const api = {
       method,
       headers: {
         "Content-Type": "application/json",
-        authorization: `Bearer ${token}`,
+        // authorization: `Bearer ${token}`,
         ...headers,
       },
+    credentials:'include',
       cache: cache ?? "no-store", // Dynamic caching: override with custom value if provided
     };
 

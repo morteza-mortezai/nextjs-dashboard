@@ -3,6 +3,7 @@ import {
   UserGroupIcon,
   HomeIcon,
   DocumentDuplicateIcon,
+  CheckBadgeIcon
 } from '@heroicons/react/24/outline';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
@@ -17,7 +18,8 @@ const links = [
     href: '/dashboard/invoices',
     icon: DocumentDuplicateIcon,
   },
-  { name: 'ثبت شده', href: '/dashboard/media-list', icon: UserGroupIcon },
+  { name: 'پیج (کانال) ها', href: '/dashboard/media-list', icon: CheckBadgeIcon },
+  { name: 'کاربران', href: '/dashboard/users', icon: UserGroupIcon },
 ];
 
 export default function NavLinks() {
