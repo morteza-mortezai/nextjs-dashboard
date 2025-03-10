@@ -3,9 +3,10 @@ import { AppRouterCacheProvider } from "@mui/material-nextjs/v15-appRouter";
 import { Roboto } from "next/font/google";
 import { ThemeProvider } from "@mui/material/styles";
 import theme from "./theme";
-import CssBaseline from '@mui/material/CssBaseline';
+import CssBaseline from "@mui/material/CssBaseline";
 import SessionProvider from "../lib/sessionProvider";
 import { getSession } from "../lib/authSession";
+
 
 const roboto = Roboto({
   weight: ["300", "400", "500", "700"],
@@ -19,18 +20,18 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const session=await getSession()
+  const session = await getSession();
   return (
     <html lang="fa" dir="rtl">
       <body className={roboto.className}>
-        <AppRouterCacheProvider >
+        <AppRouterCacheProvider>
           <ThemeProvider theme={theme} noSsr>
             <CssBaseline />
             <SessionProvider session={session}>
 
-            {children}
+                {children}
             </SessionProvider>
-            </ThemeProvider>
+          </ThemeProvider>
         </AppRouterCacheProvider>
       </body>
     </html>

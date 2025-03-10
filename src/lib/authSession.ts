@@ -1,5 +1,5 @@
 import { cookies } from "next/headers";
-const cookieName = "userSession";
+const cookieName = "Authorization";
 
 export async function saveSession(accessToken: string) {
   return (await cookies()).set(cookieName, accessToken, {
