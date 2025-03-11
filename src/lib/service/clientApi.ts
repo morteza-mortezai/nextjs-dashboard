@@ -13,7 +13,8 @@ function buildUrl(path: string, query?: Record<string, any>): string {
       }
     });
   }
-  return  url.pathname ;
+  console.log('url',url)
+  return  url.pathname+url.search ;
 }
 
 type RequestOptions = {
