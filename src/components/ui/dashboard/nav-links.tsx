@@ -3,8 +3,9 @@ import {
   UserGroupIcon,
   HomeIcon,
   DocumentDuplicateIcon,
-  CheckBadgeIcon
+  CheckBadgeIcon,
 } from '@heroicons/react/24/outline';
+import {Support} from '@mui/icons-material'
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import clsx from 'clsx';
@@ -20,6 +21,7 @@ const links = [
   },
   { name: 'پیج (کانال) ها', href: '/dashboard/media-list', icon: CheckBadgeIcon },
   { name: 'کاربران', href: '/dashboard/users', icon: UserGroupIcon },
+  { name: 'پشتیبانی', href: '/dashboard/support', icon: Support },
 ];
 
 export default function NavLinks() {

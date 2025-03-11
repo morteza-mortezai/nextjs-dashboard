@@ -3,15 +3,9 @@ import getUsers from "@/src/lib/service/user/GetUsers";
 import { Avatar, Pagination } from "@mui/material";
 import { useRouter } from "next/navigation";
 import { useSearchParams } from "next/navigation";
-
-import {
-  QueryClient,
-  QueryClientProvider,
-  useQuery,
-} from "@tanstack/react-query";
+import QueryClientProviderWrapper from "@/src/components/QueryClientProviderWrapper";
+import { useQuery, keepPreviousData } from "@tanstack/react-query";
 import { useState } from "react";
-
-const queryClient = new QueryClient();
 
 function UsersListInner() {
   const searchParams = useSearchParams();
@@ -24,7 +18,7 @@ function UsersListInner() {
   const { data } = useQuery({
     queryKey: ["userList", currentPage],
     queryFn: () => getUsers({ page: currentPage }),
-    staleTime: 0,
+    placeholderData: keepPreviousData,
   });
 
   const handleChange = (event: React.ChangeEvent<unknown>, value: number) => {
@@ -59,8 +53,8 @@ function UsersListInner() {
 
 export default function UsersList() {
   return (
-    <QueryClientProvider client={queryClient}>
+    <QueryClientProviderWrapper>
       <UsersListInner />
-    </QueryClientProvider>
+    </QueryClientProviderWrapper>
   );
 }
