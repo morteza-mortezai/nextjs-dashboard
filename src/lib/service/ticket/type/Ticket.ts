@@ -3,10 +3,10 @@ export type Ticket = {
   subject: string;
   content: string;
   status: number;
-  createdAt: Date;
-  updatedAt: Date;
-  completedAt: null | Date;
-  deletedAt: null | Date;
+  createdAt: string;
+  updatedAt: string;
+  completedAt: null | string;
+  deletedAt: null | string;
   user: number;
   images:string
 };

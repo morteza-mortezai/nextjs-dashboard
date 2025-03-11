@@ -4,7 +4,7 @@ const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || "https://api.example.co
 
 // Helper function to build URL with query parameters
 function buildUrl(path: string, query?: Record<string, any>): string {
-  const url = new URL(`${BASE_URL}${path}`);
+  const url = new URL(`${BASE_URL}/${path}`);
   if (query) {
     Object.entries(query).forEach(([key, value]) => {
       if (value !== undefined && value !== null) {
