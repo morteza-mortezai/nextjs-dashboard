@@ -3,35 +3,33 @@ import { AppRouterCacheProvider } from "@mui/material-nextjs/v15-appRouter";
 import SessionProvider from "../../lib/sessionProvider";
 import { getSession } from "../../lib/authSession";
 import RtlCacheProvider from "./RtlCacheProvider";
-import { getDictionary, Locale } from "./dictionaries/dictionaries";
-// import { Roboto } from "next/font/google";
-// const roboto = Roboto({
-//   weight: ["300", "400", "500", "700"],
-//   subsets: ["latin"],
-//   display: "swap",
-//   variable: "--font-roboto",
-// });
+import {NextIntlClientProvider, Locale, hasLocale} from 'next-intl';
+import {notFound} from 'next/navigation';
+import {routing} from '@/src/i18n/routing';
 
 export default async function RootLayout({
   children,
   params,
 }: {
   children: React.ReactNode;
-  params: Promise<{ lang: Locale }>;
+  params: Promise<{ locale: string }>;
 }) {
-  const { lang } = await params;
-  const dict = await getDictionary(lang) // en
+
+  const { locale } = await params; 
+  // const dict = await getDictionary(lang) 
+  if (!hasLocale(routing.locales, locale)) {
+    notFound();
+  }
   const session = await getSession();
+
   return (
-    <html lang={lang} dir={lang=='fa-IR'?'rtl':'ltr'}  >
+    <html lang={locale} dir={locale=='fa'?'rtl':'ltr'}  >
       <body>
         <AppRouterCacheProvider>
           <RtlCacheProvider>
             <SessionProvider session={session}>
-     
-             <button>{dict.products.cart}</button> 
-              
-              {children}</SessionProvider>
+            <NextIntlClientProvider>{children}</NextIntlClientProvider>
+              </SessionProvider>
           </RtlCacheProvider>
         </AppRouterCacheProvider>
       </body>

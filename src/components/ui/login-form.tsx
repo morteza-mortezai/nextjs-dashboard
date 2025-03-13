@@ -11,21 +11,23 @@ import { Button } from "@/src/components/ui/button";
 import { useActionState } from "react";
 import { authenticate } from "@/src/lib/auth.action";
 import { useSearchParams } from "next/navigation";
+import {useTranslations} from 'next-intl';
 
-export default function LoginForm() {
+export default  function LoginForm() {
   const searchParams = useSearchParams();
   const callbackUrl = searchParams.get("callbackUrl") || "/dashboard";
-  
+  const t = useTranslations( );
+
   const [errorMessage, formAction, isPending] = useActionState(
     authenticate,
     undefined
-  ); 
+  );
 
   return (
     <form action={formAction} className="space-y-3">
       <div className="flex-1 rounded-lg bg-gray-50 px-6 pb-4 pt-8">
         <h1 className={`${lusitana.className} mb-3 text-2xl`}>
-          Please log in to continue.
+          {t('loginTitle')}
         </h1>
         {JSON.stringify(errorMessage?.message)}
         <div className="w-full">
