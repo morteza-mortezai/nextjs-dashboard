@@ -16,7 +16,6 @@ export default async function RootLayout({
 }) {
 
   const { locale } = await params; 
-  // const dict = await getDictionary(lang) 
   if (!hasLocale(routing.locales, locale)) {
     notFound();
   }
@@ -38,6 +37,6 @@ export default async function RootLayout({
 }
 
 
-export async function generateStaticParams() {
-  return [{ lang: 'en-US' }, { lang: 'fa-IR' }]
-}
+// export async function generateStaticParams() {
+//   return [{ lang: 'en-US' }, { lang: 'fa-IR' }]
+// }
